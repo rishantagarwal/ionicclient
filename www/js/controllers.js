@@ -1,8 +1,9 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, loginService, $ionicPopup,$ionicNavBarDelegate) {
-    
-    $ionicNavBarDelegate.showBackButton(false);   
+.controller('LoginCtrl', function($scope, loginService, $ionicPopup,$ionicNavBarDelegate,sessionService) {
+    sessionService.destroy('uid');
+    $ionicNavBarDelegate.showBackButton(false); 
+    $scope.sessionCheck = sessionService.get('uid');
     $scope.data = {};
     $scope.login = function() {
       console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
@@ -17,9 +18,10 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('LogoutCtrl',function($scope,$location,$state,loginService,$ionicPopup,$ionicNavBarDelegate){
-  
-  $ionicNavBarDelegate.showBackButton(false);
+.controller('LogoutCtrl',function($scope,$location,$state,loginService,$ionicPopup,$ionicNavBarDelegate,sessionService){
+  loginService.loginCheck();
+  $scope.sessionCheck = sessionService.get('uid');
+  //$ionicNavBarDelegate.showBackButton(false);
   $scope.logMeOut = function(){
      
      loginService.logout().success(function(data){
@@ -41,24 +43,19 @@ angular.module('starter.controllers', [])
   };
    
     $scope.redirectToLogin = function(){
-      /*loginService.logout().success(function(data){
-        
-      })
-      .error(function(err){
-         var alertPopup = $ionicPopup.alert({
-                title: 'Logout failed!',
-                template: err
-            });
-      });*/
-      $location.path('/login');
+       $location.path('/login');
     };
 })
 
 
-.controller('DashCtrl', function($scope) {})
-.controller('CtrlPanelCtrl', function($scope,$ionicPopup,$timeout,$http) {
+.controller('DashCtrl', function($scope,sessionService,loginService) {
+   loginService.loginCheck();
+   $scope.sessionCheck = sessionService.get('uid');
+})
+.controller('CtrlPanelCtrl', function($scope,$ionicPopup,$timeout,$http,sessionService,loginService) {
   
-  
+   loginService.loginCheck();
+   $scope.sessionCheck = sessionService.get('uid');
    $scope.showPopup = function() {};
    $scope.data = {};
 
@@ -88,7 +85,7 @@ angular.module('starter.controllers', [])
        template: Message
      });
      alertPopup.then(function(res) {
-       console.log('Thank you for not eating my delicious ice cream cone');
+       console.log('Done !');
      });
    };
    

@@ -19,32 +19,13 @@ angular.module('starter.services', [])
 		}
 	};
 }])
-/*
-.factory('loginService',function($q,sessionService) {
-    return {
-        loginUser: function(name, pw) {
-            var deferred = $q.defer();
-            var promise = deferred.promise;
- 
-            if (name == 'user' && pw == 'secret') {
-                deferred.resolve('Welcome ' + name + '!');
-            } else {
-                deferred.reject('Wrong credentials.');
-            }
-            promise.success = function(fn) {
-                promise.then(fn);
-                return promise;
-            }
-            promise.error = function(fn) {
-                promise.then(null, fn);
-                return promise;
-            }
-            return promise;
-        }
-    };
-})  */
 .factory('loginService',function($http, $location, sessionService,$q){
 	return{
+	  loginCheck:function(){
+	    if(!sessionService.get('uid')){
+	      $location.path('/login');
+	    }
+	  },
 		login:function(usrnm,pwd){
 		  var deferred = $q.defer();
 		  var promise = deferred.promise;
@@ -65,7 +46,7 @@ angular.module('starter.services', [])
 			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 		//	console.log(promise);
 			promise.then(function(msg){
-			  console.log(msg);
+			  console.log(msg.data);
 				var uid=msg.data.id;
 				if(uid){
 				//	scope.msgtxt='Correct information';

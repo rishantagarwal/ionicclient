@@ -25,7 +25,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 // Adding code to check session everytime page changes
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider,$ionicConfigProvider) {
+  //Setting configurations for the App
+  
+  $ionicConfigProvider.views.maxCache(0);
+
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -74,24 +78,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
-})
-  .run(function($rootScope,$location, loginService){
-  var routespermission = ['/logout','/tab','/tab/ctrlPanel','/tab/dash']; //routes that require login
-  $rootScope.$on('$routeChangeStart', function(){
-  console.log("fgbgfb");
-	if( routespermission.indexOf($location.path()) !=-1)
-		{
-			var connected=loginService.islogged();
-			console.log("Connected ->"+connected);
-			connected.then(function(msg){
-				if(!msg.data)
-				event.preventDefault();
-        $rootScope.$evalAsync(function() {
-				  $location.path('/login');
-          
-        });
-			});
-		}
-	});
-})
-;
+});
