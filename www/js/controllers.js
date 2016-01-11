@@ -52,11 +52,11 @@ angular.module('starter.controllers', [])
    loginService.loginCheck();
    $scope.sessionCheck = sessionService.get('uid');
 })
-.controller('CtrlPanelCtrl', function($scope,$ionicPopup,$timeout,$http,sessionService,loginService) {
+.controller('CtrlPanelCtrl', function($scope,$ionicPopup,$timeout,$http,sessionService,loginService,postDataService) {
   
    loginService.loginCheck();
    $scope.sessionCheck = sessionService.get('uid');
-   $scope.showPopup = function() {};
+   
    $scope.data = {};
 
    // A confirm dialog
@@ -88,20 +88,30 @@ angular.module('starter.controllers', [])
        console.log('Done !');
      });
    };
+
+   /* ----------------
+   * 1 - leavingOffice
+   * 2 - returningOffice
+   * 3 - startSales
+   * 4 - endSales
+   */ 
    
    //Leaving from the office
    $scope.leaveOffice= function(){
      console.log("Left from office");
      var rslt= $scope.showConfirm("Leaving office !","Are you sure you want to update the status !!");
-     if(res){
-         $http.get("")
-            .success(function(response){
-                console.log(response);
-                $scope.showAlert("Leaving office !","Status updated");
+     if(rslt){
+                postDataService.setStatus(1).success(function(data){
+                    $scope.showAlert("Leaving office !","Status updated");
+                })
+              .error(function(error){
+                $scope.showAlert("Error","Failed to update status !!");
+              })
+                
             })
          
         }
-        else {}    
+           
             //.error(function(response){});
      
    }

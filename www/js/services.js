@@ -19,6 +19,97 @@ angular.module('starter.services', [])
 		}
 	};
 }])
+.factory('postDataService',function($http,sessionService,$q){
+
+
+	return{
+		setStatus:function(status){
+			if(!sessionService.get('uid')){
+				$location.path('/login');
+			}
+			else{
+				var deferred = $q.defer();
+				vsr promise = deferred.promise();
+				promise = $http({
+					method : 'POST',
+					url:      'https://apiserver-rishant.c9users.io/api/setStatus',
+					transformRequest: function(obj) {
+            			var str = [];
+            			for(var p in obj)
+            			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            			return str.join("&");
+        				},
+        			data:{
+        				username:sessionService.get('name'),
+        				status:status},
+        			headers:{
+        				'Content-Type':'application/x-www-form-urlencoded'}
+				});
+				promise.then(function(response){
+					if(response.data.success){
+						// everything is OK
+					deferred.resolve('Welcome ');
+					console.log(sessionService.get('uid'));
+					
+					}
+					else
+					{
+						// displsy error 
+					$location.path('/login');
+			  	    deferred.reject('Wrong credentials.');
+					}
+				});
+				promise.success = function(fn) {
+            		promise.then(fn);
+            		return promise;
+      			}
+      			promise.error = function(fn) {
+            		promise.then(null, fn);
+            		return promise;
+      			}
+      			return promise;
+
+			}
+		},
+
+	getStatus:function(status){
+			if(!sessionService.get('uid')){
+				$location.path('/login');
+			}
+			else{
+				var deferred = $q.defer();
+				vsr promise = deferred.promise();
+				promise = $http({
+					method : 'GET',
+					url:      'https://apiserver-rishant.c9users.io/api/getStatus'
+				});
+				promise.then(function(response){
+					if(response.data.success){
+						// everything is OK
+					deferred.resolve(response.data);
+					}
+					else
+					{
+						// displsy error 
+					$location.path('/login');
+			  	    deferred.reject('Wrong credentials.');
+					}
+				});
+				promise.success = function(fn) {
+            		promise.then(fn);
+            		return promise;
+      			}
+      			promise.error = function(fn) {
+            		promise.then(null, fn);
+            		return promise;
+      			}
+      			return promise;
+
+			}
+		}
+
+	}
+})
 .factory('loginService',function($http, $location, sessionService,$q){
 	return{
 	  loginCheck:function(){
@@ -37,27 +128,28 @@ angular.module('starter.services', [])
             for(var p in obj)
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             return str.join("&");
-        },
+        	},
 		    data:{username:usrnm,password:pwd},
 		    headers:{
 		      'Content-Type':'application/x-www-form-urlencoded'
 		    }
 		  });
-			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
+		//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 		//	console.log(promise);
 			promise.then(function(msg){
 			  console.log(msg.data);
-				var uid=msg.data.id;
-				if(uid){
+			  var uid=msg.data.id;
+		      if(uid){
 				//	scope.msgtxt='Correct information';
 					sessionService.set('uid',uid);
+					sessionService.set('name',usrnm);
 					deferred.resolve('Welcome ');
 					console.log(sessionService.get('uid'));
 					$location.path('/tab/dash');
-				}	       
-				else  {
+			　}	       
+			　else  {
 				//	scope.msgtxt='incorrect information';
-					$location.path('/login');
+				$location.path('/login');
 			  	deferred.reject('Wrong credentials.');
 				}
 			});
