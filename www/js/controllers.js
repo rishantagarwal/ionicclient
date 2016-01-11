@@ -108,13 +108,14 @@ angular.module('starter.controllers', [])
                 $scope.showAlert("Error","Failed to update status !!");
               })
                 
-            })
+            }
+            
          
-        }
+        
            
             //.error(function(response){});
      
-   }
+   };
    
    //Returning to the office
    $scope.returnOffice= function(){

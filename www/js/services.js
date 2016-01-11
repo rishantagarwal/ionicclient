@@ -29,7 +29,7 @@ angular.module('starter.services', [])
 			}
 			else{
 				var deferred = $q.defer();
-				vsr promise = deferred.promise();
+				var promise = deferred.promise();
 				promise = $http({
 					method : 'POST',
 					url:      'https://apiserver-rishant.c9users.io/api/setStatus',
@@ -78,7 +78,7 @@ angular.module('starter.services', [])
 			}
 			else{
 				var deferred = $q.defer();
-				vsr promise = deferred.promise();
+				var promise = deferred.promise();
 				promise = $http({
 					method : 'GET',
 					url:      'https://apiserver-rishant.c9users.io/api/getStatus'
