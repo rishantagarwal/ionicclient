@@ -7,15 +7,21 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','ngCordova'])
 
-.run(function($ionicPlatform,$cordovaGeolocation,$ionicPopup) {
+.run(function($ionicPlatform,$ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+
+   if (window.cordova) {
+      if (window.BackgroundGeolocation) {
+        BackgroundGeolocationService.configurePlugin(window.BackgroundGeolocation);
+      }
+    }
     
     var x = window.BackgroundGeolocation;
     console.log(x);
 
-      
+
 
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -28,39 +34,39 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
     }
 
 
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation
-    .getCurrentPosition(posOptions)
-    .then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-      $ionicPopup.alert({
-        title : lat,
-        template : long
-      });
-    }, function(err) {
-      // error
-    });
+  // var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  // $cordovaGeolocation
+  //   .getCurrentPosition(posOptions)
+  //   .then(function (position) {
+  //     var lat  = position.coords.latitude
+  //     var long = position.coords.longitude
+  //     $ionicPopup.alert({
+  //       title : lat,
+  //       template : long
+  //     });
+  //   }, function(err) {
+  //     // error
+  //   });
 
 
-  var watchOptions = {
-    timeout : 3000,
-    enableHighAccuracy: false // may cause errors if true
-  };
+  // var watchOptions = {
+  //   timeout : 3000,
+  //   enableHighAccuracy: false // may cause errors if true
+  // };
 
-  var watch = $cordovaGeolocation.watchPosition(watchOptions);
-  watch.then(
-    null,
-    function(err) {
-      // error
-    },
-    function(position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-  });
+  // var watch = $cordovaGeolocation.watchPosition(watchOptions);
+  // watch.then(
+  //   null,
+  //   function(err) {
+  //     // error
+  //   },
+  //   function(position) {
+  //     var lat  = position.coords.latitude
+  //     var long = position.coords.longitude
+  // });
 
 
-  watch.clearWatch();
+  // watch.clearWatch();
  
   });
 })
