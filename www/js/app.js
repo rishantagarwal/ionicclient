@@ -105,6 +105,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
   })
   // Each tab has its own nav history stack:
 
+  .state('tab.googleMap',{
+    url: '/googleMap',
+    controller: 'googleMapCtrl'
+  })
+
   .state('tab.dash', {
     url: '/dash',
     views: {

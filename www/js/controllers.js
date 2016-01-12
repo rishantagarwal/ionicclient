@@ -18,6 +18,10 @@ angular.module('starter.controllers', [])
     }
 })
 
+.controller('googleMapCtrl',function($location){
+  $location.path("comgooglemaps://");
+})
+
 .controller('LogoutCtrl',function($scope,$location,$state,loginService,$ionicPopup,$ionicNavBarDelegate,sessionService){
   loginService.loginCheck();
   $scope.sessionCheck = sessionService.get('uid');
@@ -65,9 +69,7 @@ angular.module('starter.controllers', [])
        title: Title,
        template: Message
      });
-     confirmPopup.then(function(res) {
-         console.log(res);
-         return res;
+     
       /* if(res) {
          console.log('You are sure');
          return "true";
@@ -109,27 +111,52 @@ angular.module('starter.controllers', [])
               })
                 
             }
-            
-         
-        
-           
-            //.error(function(response){});
-     
    };
    
    //Returning to the office
    $scope.returnOffice= function(){
      console.log("Returning to the office");
+     var rslt= $scope.showConfirm("Returning to office !","Are you sure you want to update the status !!");
+     if(rslt){
+                postDataService.setStatus(1).success(function(data){
+                    $scope.showAlert("Returning to office !","Status updated");
+                })
+              .error(function(error){
+                $scope.showAlert("Error","Failed to update status !!");
+              })
+                
+            }
    };
    
    //Starting sales for the day
    $scope.startSales= function(){
      console.log("Starting sales for the day");
+     var rslt= $scope.showConfirm("Start Sales !","Are you sure you want to update the status !!")
+     .then(function(){
+                postDataService.setStatus(1).success(function(data){
+                    $scope.showAlert("Start Sales!","Status updated");
+                })
+              .error(function(error){
+                $scope.showAlert("Error","Failed to update status !!");
+              })
+                
+            }
+        });
    };
    
    //Ending sales for the day 
    $scope.endSales= function(){
      console.log("Ending sales for the day");
+     var rslt= $scope.showConfirm("End Sales !","Are you sure you want to update the status !!");
+     if(rslt){
+                postDataService.setStatus(1).success(function(data){
+                    $scope.showAlert("End Sales !","Status updated");
+                })
+              .error(function(error){
+                $scope.showAlert("Error","Failed to update status !!");
+              })
+                
+            }
    };
    
    
