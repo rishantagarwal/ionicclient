@@ -77,8 +77,8 @@ angular.module('starter.controllers', [])
          console.log('You are not sure');
          return "false";
        }*/
-     });
-   };
+     };
+   
 
    // An alert dialog
    $scope.showAlert = function(Title,Message) {
@@ -138,11 +138,11 @@ angular.module('starter.controllers', [])
                 })
               .error(function(error){
                 $scope.showAlert("Error","Failed to update status !!");
-              })
+              });
                 
-            }
-        });
-   };
+            });
+        };
+   
    
    //Ending sales for the day 
    $scope.endSales= function(){
