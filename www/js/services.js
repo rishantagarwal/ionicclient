@@ -81,7 +81,7 @@ angular.module('starter.services', [])
 				var promise = deferred.promise();
 				promise = $http({
 					method : 'GET',
-					url:      'https://apiserver-rishant.c9users.io/api/getStatus'
+					url:     'https://apiserver-rishant.c9users.io/api/getStatus'
 				});
 				promise.then(function(response){
 					if(response.data.success){
