@@ -100,17 +100,22 @@ angular.module('starter.controllers', [])
    
    //Leaving from the office
    $scope.leaveOffice= function(){
-     console.log("Left from office");
-     var rslt= $scope.showConfirm("Leaving office !","Are you sure you want to update the status !!");
-     if(rslt){
-                postDataService.setStatus(1).success(function(data){
-                    $scope.showAlert("Leaving office !","Status updated");
-                })
-              .error(function(error){
-                $scope.showAlert("Error","Failed to update status !!");
-              })
+
+      console.log(window.cordova);
+      console.log(window.BackgroundGeolocation);
+      console.log("check");
+
+     //console.log("Left from office");
+     // var rslt= $scope.showConfirm("Leaving office !","Are you sure you want to update the status !!");
+     // if(rslt){
+     //            postDataService.setStatus(1).success(function(data){
+     //                $scope.showAlert("Leaving office !","Status updated");
+     //            })
+     //          .error(function(error){
+     //            $scope.showAlert("Error","Failed to update status !!");
+     //          })
                 
-            }
+     //        }
    };
    
    //Returning to the office

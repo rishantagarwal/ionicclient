@@ -7,20 +7,20 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform,$ionicPopup) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
 
    if (window.cordova) {
       if (window.BackgroundGeolocation) {
-        BackgroundGeolocationService.configurePlugin(window.BackgroundGeolocation);
+       // BackgroundGeolocationService.configurePlugin(window.BackgroundGeolocation);
       }
     }
     
-    var x = window.cordova;
-    alert(x);
-    console.log(x);
+    // var x = window.cordova;
+    // alert(x);
+    // console.app(x);
 
 
 
