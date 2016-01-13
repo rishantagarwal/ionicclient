@@ -50,13 +50,13 @@ angular.module('starter.services', [])
     bgGeo.configure(callbackFn, failureFn, {
         // Geolocation config
         desiredAccuracy: 0,
-        stationaryRadius: 5,
+        stationaryRadius: 0,
         distanceFilter: 0,
         disableElasticity: true, // <-- [iOS] Default is 'false'.  Set true to disable speed-based distanceFilter elasticity
-        locationUpdateInterval: 5000,
-        minimumActivityRecognitionConfidence: 0,   // 0-100%.  Minimum activity-confidence for a state-change 
+        locationUpdateInterval: 500,
+        minimumActivityRecognitionConfidence: 10,   // 0-100%.  Minimum activity-confidence for a state-change 
         fastestLocationUpdateInterval: 5000,
-        activityRecognitionInterval: 10000,
+        activityRecognitionInterval: 1000,
         stopDetectionDelay: 1,  // Wait x minutes to engage stop-detection system
         stopTimeout: 2,  // Wait x miutes to turn off location system after stop-detection
         activityType: 'AutomotiveNavigation',
@@ -70,7 +70,7 @@ angular.module('starter.services', [])
         startOnBoot: true,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
-        url: 'https://apiserver-rishant.c9users.io/check/',
+        url: 'https://apiserver-rishant.c9users.io/setLocation/',
         method: 'POST',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
