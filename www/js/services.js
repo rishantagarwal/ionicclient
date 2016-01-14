@@ -50,15 +50,15 @@ angular.module('starter.services', [])
     bgGeo.configure(callbackFn, failureFn, {
         // Geolocation config
         desiredAccuracy: 0,
-        stationaryRadius: 0,
-        distanceFilter: 0,
-        disableElasticity: true, // <-- [iOS] Default is 'false'.  Set true to disable speed-based distanceFilter elasticity
-        locationUpdateInterval: 500,
+        stationaryRadius: 3,
+        distanceFilter: 10,
+        disableElasticity: false, // <-- [iOS] Default is 'false'.  Set true to disable speed-based distanceFilter elasticity
+        locationUpdateInterval: 10,
         minimumActivityRecognitionConfidence: 10,   // 0-100%.  Minimum activity-confidence for a state-change 
         fastestLocationUpdateInterval: 5000,
-        activityRecognitionInterval: 1000,
-        stopDetectionDelay: 1,  // Wait x minutes to engage stop-detection system
-        stopTimeout: 2,  // Wait x miutes to turn off location system after stop-detection
+        activityRecognitionInterval: 0,
+        stopDetectionDelay: 10,  // Wait x minutes to engage stop-detection system
+        stopTimeout: 10,  // Wait x miutes to turn off location system after stop-detection
         activityType: 'AutomotiveNavigation',
 
         // Application config
@@ -70,7 +70,7 @@ angular.module('starter.services', [])
         startOnBoot: true,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
-        url: 'https://apiserver-rishant.c9users.io/setLocation/',
+        url: 'https://apiserver-rishant.c9users.io/api/setLocation/',
         method: 'POST',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
@@ -193,7 +193,7 @@ angular.module('starter.services', [])
 
 	}
 })
-.factory('loginService',function($http, $location, sessionService,$q,bgGeoService){
+.factory('loginService',function($http, $location, sessionService,$q,bgGeoService,$ionicLoading){
 	return{
 	  loginCheck:function(){
 	    if(!sessionService.get('uid')){
@@ -203,6 +203,10 @@ angular.module('starter.services', [])
 		login:function(usrnm,pwd){
 		  var deferred = $q.defer();
 		  var promise = deferred.promise;
+		  $ionicLoading.show({
+		  	template: '<ion-spinner icon="ripple"></ion-spinner>'+
+            		   '<p>Please wait</p>'
+		  });
 		  promise = $http({
 		    method:'POST',
 		    url:'https://apiserver-rishant.c9users.io/login',
@@ -220,6 +224,7 @@ angular.module('starter.services', [])
 		//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 		//	console.log(promise);
 			promise.then(function(msg){
+			  $ionicLoading.hide();
 			  console.log(msg.data);
 			  var uid=msg.data.id;
 		      if(uid){
@@ -257,6 +262,10 @@ angular.module('starter.services', [])
 		},
 		logout:function(){
 		  console.log("Called logout");
+		  $ionicLoading.show({
+		  	template: '<ion-spinner icon="ripple"></ion-spinner>'+
+            		   '<p>Please wait</p>'
+		  });
 		  
 		  sessionService.destroy('uid');
 		  bgGeoService.stop();
@@ -271,6 +280,7 @@ angular.module('starter.services', [])
 	  	//	console.log(promise);
 			promise.then(function(msg){
 			  console.log("Check Api msg"+msg);
+			  $ionicLoading.hide();
 				var uid=msg.data.success;
 				if(uid){
 				//	scope.msgtxt='Correct information';
@@ -305,7 +315,7 @@ angular.module('starter.services', [])
 			else return false;
 			*/
 			
-			var deferred = $q.defer();
+		  var deferred = $q.defer();
 		  var promise = deferred.promise;
 		  promise = $http({
 		    method:'GET',
