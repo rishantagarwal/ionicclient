@@ -52,13 +52,13 @@ angular.module('starter.services', [])
         desiredAccuracy: 0,
         stationaryRadius: 3,
         distanceFilter: 10,
-        disableElasticity: false, // <-- [iOS] Default is 'false'.  Set true to disable speed-based distanceFilter elasticity
+        disableElasticity: true, // <-- [iOS] Default is 'false'.  Set true to disable speed-based distanceFilter elasticity
         locationUpdateInterval: 10,
         minimumActivityRecognitionConfidence: 10,   // 0-100%.  Minimum activity-confidence for a state-change 
         fastestLocationUpdateInterval: 5000,
-        activityRecognitionInterval: 0,
-        stopDetectionDelay: 10,  // Wait x minutes to engage stop-detection system
-        stopTimeout: 10,  // Wait x miutes to turn off location system after stop-detection
+        activityRecognitionInterval: 1,
+        stopDetectionDelay: 1,  // Wait x minutes to engage stop-detection system
+        stopTimeout: 1,  // Wait x miutes to turn off location system after stop-detection
         activityType: 'AutomotiveNavigation',
 
         // Application config
