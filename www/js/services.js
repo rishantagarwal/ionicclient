@@ -70,7 +70,7 @@ angular.module('starter.services', [])
         startOnBoot: true,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
-        url: 'https://apiserver-rishant.c9users.io/api/setLocation/',
+        url: 'https://apiserver-rishant.c9users.io/api/setLocation',
         method: 'POST',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
@@ -82,6 +82,8 @@ angular.module('starter.services', [])
              "user": sessionService.get('name')
          }
        });
+
+	bgGeo.changePace(true);
    
 	
 	$rootScope.bgGeo = bgGeo;
@@ -111,11 +113,12 @@ angular.module('starter.services', [])
 				$location.path('/login');
 			}
 			else{
+				console.log("helo");
 				var deferred = $q.defer();
-				var promise = deferred.promise();
+				var promise = deferred.promise;
 				promise = $http({
 					method : 'POST',
-					url:      'https://apiserver-rishant.c9users.io/api/setStatus',
+					url:      'https://apiserver-rishant.c9users.io/api/updateStatus',
 					transformRequest: function(obj) {
             			var str = [];
             			for(var p in obj)
@@ -123,7 +126,7 @@ angular.module('starter.services', [])
             			return str.join("&");
         				},
         			data:{
-        				username:sessionService.get('name'),
+        				id:sessionService.get('name'),
         				status:status},
         			headers:{
         				'Content-Type':'application/x-www-form-urlencoded'}
@@ -245,6 +248,7 @@ angular.module('starter.services', [])
 			　}	       
 			　else  {
 				//	scope.msgtxt='incorrect information';
+				$ionicLoading.hide();
 				$location.path('/login');
 			  	deferred.reject('Wrong credentials.');
 				}
@@ -290,6 +294,7 @@ angular.module('starter.services', [])
 					$location.path('/login');
 				}	       
 				else  {
+				$ionicLoading.hide();	
 				//	scope.msgtxt='incorrect information';
 					//$location.path('/login');
 			  	deferred.reject('Wrong credentials.');

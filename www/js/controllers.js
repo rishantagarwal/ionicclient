@@ -7,7 +7,8 @@ angular.module('starter.controllers', [])
     $scope.data = {};
     $scope.login = function() {
       console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
-      loginService.login($scope.data.username, $scope.data.password).success(function(data) {
+      loginService.login($scope.data.username, $scope.data.password)
+        .success(function(data) {
             //$state.go('tab.dash');
         }).error(function(data) {
             var alertPopup = $ionicPopup.alert({
@@ -99,71 +100,92 @@ angular.module('starter.controllers', [])
    */ 
    
    //Leaving from the office
-   $scope.leaveOffice= function(){
-
-      console.log(window.cordova);
-      console.log(window.BackgroundGeolocation);
-      console.log("check");
-
-     //console.log("Left from office");
-     // var rslt= $scope.showConfirm("Leaving office !","Are you sure you want to update the status !!");
-     // if(rslt){
-     //            postDataService.setStatus(1).success(function(data){
-     //                $scope.showAlert("Leaving office !","Status updated");
-     //            })
-     //          .error(function(error){
-     //            $scope.showAlert("Error","Failed to update status !!");
-     //          })
+  $scope.leaveOffice= function(){
+  var confirmPopup = $ionicPopup.confirm({
+       title: "Leaving office !",
+       template: "Are you sure you want to update the status !!"
+     });
+  confirmPopup.then(function (res) {
+    if(res){
+       postDataService.setStatus(1).success(function(data){
+       $scope.showAlert("Leaving office !","Status updated");})
+        .error(function(error){
+        $scope.showAlert("Error","Failed to update status !!");
+        });
                 
-     //        }
-   };
+        }
+    
+  else{
+    $scope.showAlert("Error","Failed to update status !!");
+  }
+
+})};
    
    //Returning to the office
    $scope.returnOffice= function(){
-     console.log("Returning to the office");
-     var rslt= $scope.showConfirm("Returning to office !","Are you sure you want to update the status !!");
-     if(rslt){
-                postDataService.setStatus(1).success(function(data){
-                    $scope.showAlert("Returning to office !","Status updated");
-                })
-              .error(function(error){
-                $scope.showAlert("Error","Failed to update status !!");
-              })
+   var confirmPopup = $ionicPopup.confirm({
+       title: "Returning to office !",
+       template: "Are you sure you want to update the status !!"
+     });
+  confirmPopup.then(function (res) {
+    if(res){
+       postDataService.setStatus(2).success(function(data){
+       $scope.showAlert("Returning to office !","Status updated");})
+        .error(function(error){
+        $scope.showAlert("Error","Failed to update status !!");
+        });
                 
-            }
-   };
+        }
+    
+  else{
+    $scope.showAlert("Error","Failed to update status !!");
+  }
+
+})};
+    
    
    //Starting sales for the day
    $scope.startSales= function(){
-     console.log("Starting sales for the day");
-     var rslt= $scope.showConfirm("Start Sales !","Are you sure you want to update the status !!")
-     .then(function(){
-                postDataService.setStatus(1).success(function(data){
-                    $scope.showAlert("Start Sales!","Status updated");
-                })
-              .error(function(error){
-                $scope.showAlert("Error","Failed to update status !!");
-              });
+    var confirmPopup = $ionicPopup.confirm({
+       title: "Starting office !",
+       template: "Are you sure you want to update the status !!"
+     });
+  confirmPopup.then(function (res) {
+    if(res){
+       postDataService.setStatus(3).success(function(data){
+       $scope.showAlert(" Start !","Status updated");})
+        .error(function(error){
+        $scope.showAlert("Error","Failed to update status !!");
+        });
                 
-            });
-        };
-   
+        }
+    
+  else{
+    $scope.showAlert("Error","Failed to update status !!");
+  }
+
+})};
+    
    
    //Ending sales for the day 
    $scope.endSales= function(){
-     console.log("Ending sales for the day");
-     var rslt= $scope.showConfirm("End Sales !","Are you sure you want to update the status !!");
-     if(rslt){
-                postDataService.setStatus(1).success(function(data){
-                    $scope.showAlert("End Sales !","Status updated");
-                })
-              .error(function(error){
-                $scope.showAlert("Error","Failed to update status !!");
-              })
+    var confirmPopup = $ionicPopup.confirm({
+       title: "Ending sales !",
+       template: "Are you sure you want to update the status !!"
+     });
+  confirmPopup.then(function (res) {
+    if(res){
+       postDataService.setStatus(1).success(function(data){
+       $scope.showAlert("Ending sales !","Status updated");})
+        .error(function(error){
+        $scope.showAlert("Error","Failed to update status !!");
+        });
                 
-            }
-   };
-   
-   
+        }
+    
+  else{
+    $scope.showAlert("Error","Failed to update status !!");
+  }
 
+})};
 });
