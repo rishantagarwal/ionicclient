@@ -80,7 +80,7 @@ angular.module('starter.services', [])
         // },
          params: {
              "user": sessionService.get('name'),
-             "tokens": sessionService.get('wtoken')
+             "token": sessionService.get('wtoken')
          }
        });
 
@@ -105,7 +105,7 @@ angular.module('starter.services', [])
 		}
 })
 
-.factory('postDataService',function($http,sessionService,$q){
+.factory('postDataService',function($http,sessionService,$q,$ionicLoading){
 
 	return{
 		setStatus:function(status){
@@ -113,7 +113,11 @@ angular.module('starter.services', [])
 				$location.path('/login');
 			}
 			else{
-				console.log("helo");
+				//console.log("helo");
+				$ionicLoading.show({
+		  			template: '<ion-spinner icon="ripple"></ion-spinner>'+
+            				   '<p>Please wait</p>'
+				  });
 				var deferred = $q.defer();
 				var promise = deferred.promise;
 				promise = $http({
@@ -136,6 +140,8 @@ angular.module('starter.services', [])
 				promise.then(function(response){
 					if(response.data.success){
 						// everything is OK
+					$ionicLoading.hide();
+
 					deferred.resolve('Welcome ');
 					console.log(sessionService.get('uid'));
 					
@@ -152,6 +158,8 @@ angular.module('starter.services', [])
             		return promise;
       			}
       			promise.error = function(fn) {
+					$ionicLoading.hide();
+      				
             		promise.then(null, fn);
             		return promise;
       			}
@@ -198,7 +206,7 @@ angular.module('starter.services', [])
 
 	}
 })
-.factory('loginService',function($http, $location, sessionService,$q,bgGeoService,$ionicLoading){
+.factory('loginService',function($http,$location,$q,$ionicLoading,sessionService,bgGeoService){
 	return{
 	  loginCheck:function(){
 	    if(!sessionService.get('uid')){
@@ -206,12 +214,14 @@ angular.module('starter.services', [])
 	    }
 	  },
 		login:function(usrnm,pwd){
-		  var deferred = $q.defer();
-		  var promise = deferred.promise;
-		  $ionicLoading.show({
+		　$ionicLoading.show({
 		  	template: '<ion-spinner icon="ripple"></ion-spinner>'+
             		   '<p>Please wait</p>'
 		  });
+		  usrnm = usrnm.toLowerCase();
+		  var deferred = $q.defer();
+		  var promise = deferred.promise;
+		  
 		  promise = $http({
 		    method:'POST',
 		    url:'https://apiserver-rishant.c9users.io/login',
@@ -221,52 +231,51 @@ angular.module('starter.services', [])
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             return str.join("&");
         	},
-		    data:{username:usrnm,password:pwd},
+		    data:{
+		    	username:usrnm,
+		    	password:pwd
+		    },
 		    headers:{
 		      'Content-Type':'application/x-www-form-urlencoded'
 		    }
 		  });
-		//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
-		//	console.log(promise);
-			promise.then(function(msg){
-			  $ionicLoading.hide();
-			  console.log(msg.data);
-			  var uid=msg.data.id;
-		      if(uid){
-				//	scope.msgtxt='Correct information';
 
-				// Setting Sessions and starting tracking after initialiation 
+	 promise.then(function(msg){
+		$ionicLoading.hide();
+	    console.log(msg.data);
+	    var uid=msg.data.id;
+		 if(uid){
+			sessionService.set('uid',uid);
+			sessionService.set('name',usrnm);
+			sessionService.set('wtoken',msg.data.token);
+			$ionicLoading.hide();
 
-					sessionService.set('uid',uid);
-					sessionService.set('name',usrnm);
-					sessionService.set('wtoken',msg.data.token);
+			bgGeoService.initialize();
+			bgGeoService.start();
 
-					bgGeoService.initialize();
-					bgGeoService.start();
-
-
-					deferred.resolve('Welcome ');
-					console.log(sessionService.get('uid'));
-					$location.path('/tab/dash');
-			　}	       
-			　else  {
-				//	scope.msgtxt='incorrect information';
+			deferred.resolve('Welcome ');
+			console.log(sessionService.get('uid'));
+			$location.path('/tab/dash');
+			}	       
+			else  {
 				$ionicLoading.hide();
-				$location.path('/login');
-			  	deferred.reject('Wrong credentials.');
-				}
-			});
-			promise.success = function(fn) {
-            promise.then(fn);
+			$location.path('/login');
+			 deferred.reject('Wrong credentials.');
+			}
+	  });
+	  promise.success = function(fn) {
+			$ionicLoading.hide();
+			promise.then(fn);
             return promise;
       }
       promise.error = function(fn) {
+      	   $ionicLoading.hide();
             promise.then(null, fn);
             return promise;
       }
       return promise;
 							
-		},
+	},
 		logout:function(){
 		  console.log("Called logout");
 		  $ionicLoading.show({

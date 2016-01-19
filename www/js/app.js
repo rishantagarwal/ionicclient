@@ -33,41 +33,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-
-
-  // var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  // $cordovaGeolocation
-  //   .getCurrentPosition(posOptions)
-  //   .then(function (position) {
-  //     var lat  = position.coords.latitude
-  //     var long = position.coords.longitude
-  //     $ionicPopup.alert({
-  //       title : lat,
-  //       template : long
-  //     });
-  //   }, function(err) {
-  //     // error
-  //   });
-
-
-  // var watchOptions = {
-  //   timeout : 3000,
-  //   enableHighAccuracy: false // may cause errors if true
-  // };
-
-  // var watch = $cordovaGeolocation.watchPosition(watchOptions);
-  // watch.then(
-  //   null,
-  //   function(err) {
-  //     // error
-  //   },
-  //   function(position) {
-  //     var lat  = position.coords.latitude
-  //     var long = position.coords.longitude
-  // });
-
-
-  // watch.clearWatch();
  
   });
 })

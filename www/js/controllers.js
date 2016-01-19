@@ -175,7 +175,7 @@ angular.module('starter.controllers', [])
      });
   confirmPopup.then(function (res) {
     if(res){
-       postDataService.setStatus(1).success(function(data){
+       postDataService.setStatus(4).success(function(data){
        $scope.showAlert("Ending sales !","Status updated");})
         .error(function(error){
         $scope.showAlert("Error","Failed to update status !!");
