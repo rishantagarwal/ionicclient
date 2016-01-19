@@ -79,7 +79,8 @@ angular.module('starter.services', [])
         //     "X-FOO": "bar"
         // },
          params: {
-             "user": sessionService.get('name')
+             "user": sessionService.get('name'),
+             "tokens": sessionService.get('wtoken')
          }
        });
 
@@ -94,10 +95,10 @@ angular.module('starter.services', [])
     // bgGeo.stop()
 
 		},
-		start : function(){
+	start : function(){
 			$rootScope.bgGeo.start();
 		},
-		stop : function(){
+	stop : function(){
 			$rootScope.bgGeo.stop();	
 		}
 	
@@ -105,7 +106,6 @@ angular.module('starter.services', [])
 })
 
 .factory('postDataService',function($http,sessionService,$q){
-
 
 	return{
 		setStatus:function(status){
@@ -118,7 +118,7 @@ angular.module('starter.services', [])
 				var promise = deferred.promise;
 				promise = $http({
 					method : 'POST',
-					url:      'https://apiserver-rishant.c9users.io/api/updateStatus',
+					url　　:   'https://apiserver-rishant.c9users.io/api/updateStatus',
 					transformRequest: function(obj) {
             			var str = [];
             			for(var p in obj)
@@ -126,8 +126,10 @@ angular.module('starter.services', [])
             			return str.join("&");
         				},
         			data:{
-        				id:sessionService.get('name'),
-        				status:status},
+        				user:sessionService.get('name'),
+        				status:status,
+        				token:sessionService.get('wtoken')	
+        			},
         			headers:{
         				'Content-Type':'application/x-www-form-urlencoded'}
 				});
@@ -237,6 +239,7 @@ angular.module('starter.services', [])
 
 					sessionService.set('uid',uid);
 					sessionService.set('name',usrnm);
+					sessionService.set('wtoken',msg.data.token);
 
 					bgGeoService.initialize();
 					bgGeoService.start();
@@ -272,6 +275,9 @@ angular.module('starter.services', [])
 		  });
 		  
 		  sessionService.destroy('uid');
+		  sessionService.destroy('name');
+		  sessionService.destroy('wtoken');
+
 		  bgGeoService.stop();
 			
 		  var deferred = $q.defer();
@@ -283,7 +289,7 @@ angular.module('starter.services', [])
 			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 	  	//	console.log(promise);
 			promise.then(function(msg){
-			  console.log("Check Api msg"+msg);
+			  console.log("Check Api msg"+msg.data);
 			  $ionicLoading.hide();
 				var uid=msg.data.success;
 				if(uid){
@@ -296,7 +302,7 @@ angular.module('starter.services', [])
 				else  {
 				$ionicLoading.hide();	
 				//	scope.msgtxt='incorrect information';
-					//$location.path('/login');
+				//$location.path('/login');
 			  	deferred.reject('Wrong credentials.');
 				}
 			});
@@ -328,7 +334,7 @@ angular.module('starter.services', [])
 		  });
 			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 		//	console.log(promise);
-			promise.then(function(msg){
+	  promise.then(function(msg){
 			  console.log("Check Api msg"+msg);
 				var uid=msg.data.success;
 				if(uid){
@@ -344,7 +350,7 @@ angular.module('starter.services', [])
 			  	deferred.reject('Wrong credentials.');
 				}
 			});
-			promise.success = function(fn) {
+	  promise.success = function(fn) {
             promise.then(fn);
             return promise;
       }

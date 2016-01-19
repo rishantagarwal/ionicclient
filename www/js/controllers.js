@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, loginService, $ionicPopup,$ionicNavBarDelegate,sessionService) {
     sessionService.destroy('uid');
     $ionicNavBarDelegate.showBackButton(false); 
-    $scope.sessionCheck = sessionService.get('uid');
+   // $scope.sessionCheck = sessionService.get('uid');
     $scope.data = {};
     $scope.login = function() {
       console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
@@ -25,7 +25,7 @@ angular.module('starter.controllers', [])
 
 .controller('LogoutCtrl',function($scope,$location,$state,loginService,$ionicPopup,$ionicNavBarDelegate,sessionService){
   loginService.loginCheck();
-  $scope.sessionCheck = sessionService.get('uid');
+  //$scope.sessionCheck = sessionService.get('uid');
   //$ionicNavBarDelegate.showBackButton(false);
   $scope.logMeOut = function(){
      
@@ -55,12 +55,12 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope,sessionService,loginService) {
    loginService.loginCheck();
-   $scope.sessionCheck = sessionService.get('uid');
+   //$scope.sessionCheck = sessionService.get('uid');
 })
 .controller('CtrlPanelCtrl', function($scope,$ionicPopup,$timeout,$http,sessionService,loginService,postDataService) {
   
    loginService.loginCheck();
-   $scope.sessionCheck = sessionService.get('uid');
+   //$scope.sessionCheck = sessionService.get('uid');
    
    $scope.data = {};
 
