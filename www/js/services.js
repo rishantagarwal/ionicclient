@@ -12,7 +12,7 @@ angular.module('starter.services', [])
 		},
 		destroy:function(key){
 		  console.log("Session Service - destroy" + key);
-			//$http.get('https://apiserver-rishant.c9users.io/logout/');
+			//$http.get('http://ta-tm-119.hikari.co.jp/logout/');
 			var tmp = sessionStorage.clear();
 			return tmp;
 			//return sessionStorage.removeItem(key);
@@ -70,7 +70,7 @@ angular.module('starter.services', [])
         startOnBoot: true,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
-        url: 'https://apiserver-rishant.c9users.io/api/setLocation',
+        url: 'http://ta-tm-119.hikari.co.jp/api/setLocation',
         method: 'POST',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
@@ -122,7 +122,7 @@ angular.module('starter.services', [])
 				var promise = deferred.promise;
 				promise = $http({
 					method : 'POST',
-					url　　:   'https://apiserver-rishant.c9users.io/api/updateStatus',
+					url　　:   'http://ta-tm-119.hikari.co.jp/api/updateStatus',
 					transformRequest: function(obj) {
             			var str = [];
             			for(var p in obj)
@@ -159,7 +159,7 @@ angular.module('starter.services', [])
       			}
       			promise.error = function(fn) {
 					$ionicLoading.hide();
-      				
+
             		promise.then(null, fn);
             		return promise;
       			}
@@ -177,7 +177,7 @@ angular.module('starter.services', [])
 				var promise = deferred.promise();
 				promise = $http({
 					method : 'GET',
-					url:     'https://apiserver-rishant.c9users.io/api/getStatus'
+					url:     'http://ta-tm-119.hikari.co.jp/api/getStatus'
 				});
 				promise.then(function(response){
 					if(response.data.success){
@@ -214,17 +214,17 @@ angular.module('starter.services', [])
 	    }
 	  },
 		login:function(usrnm,pwd){
-		　$ionicLoading.show({
-		  	template: '<ion-spinner icon="ripple"></ion-spinner>'+
-            		   '<p>Please wait</p>'
-		  });
+		// 　$ionicLoading.show({
+		//   	template: '<ion-spinner icon="ripple"></ion-spinner>'+
+  //           		   '<p>Please wait</p>'
+		//   });
 		  usrnm = usrnm.toLowerCase();
 		  var deferred = $q.defer();
 		  var promise = deferred.promise;
 		  
 		  promise = $http({
 		    method:'POST',
-		    url:'https://apiserver-rishant.c9users.io/login',
+		    url:'http://ta-tm-119.hikari.co.jp/login',
 		    transformRequest: function(obj) {
             var str = [];
             for(var p in obj)
@@ -293,9 +293,9 @@ angular.module('starter.services', [])
 		  var promise = deferred.promise;
 		  promise = $http({
 		    method:'GET',
-		    url:'https://apiserver-rishant.c9users.io/logout'
+		    url:'http://ta-tm-119.hikari.co.jp/logout'
 		  });
-			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
+			//promise=$http.post('http://ta-tm-119.hikari.co.jp/login',data); //send data to user.php
 	  	//	console.log(promise);
 			promise.then(function(msg){
 			  console.log("Check Api msg"+msg.data);
@@ -328,7 +328,7 @@ angular.module('starter.services', [])
 			$location.path('/login');
 		},
 		islogged:function(){
-		/*	var $checkSessionServer=$http.get('https://apiserver-rishant.c9users.io/check');
+		/*	var $checkSessionServer=$http.get('http://ta-tm-119.hikari.co.jp/check');
 			return $checkSessionServer;*/
 			/*
 			if(sessionService.get('user')) return true;
@@ -339,9 +339,9 @@ angular.module('starter.services', [])
 		  var promise = deferred.promise;
 		  promise = $http({
 		    method:'GET',
-		    url:'https://apiserver-rishant.c9users.io/check'
+		    url:'http://ta-tm-119.hikari.co.jp/check'
 		  });
-			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
+			//promise=$http.post('http://ta-tm-119.hikari.co.jp/login',data); //send data to user.php
 		//	console.log(promise);
 	  promise.then(function(msg){
 			  console.log("Check Api msg"+msg);

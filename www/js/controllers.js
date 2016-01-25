@@ -1,16 +1,22 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, loginService, $ionicPopup,$ionicNavBarDelegate,sessionService) {
+.controller('LoginCtrl', function($scope, loginService, $ionicPopup,$ionicNavBarDelegate,$ionicLoading,sessionService) {
     sessionService.destroy('uid');
     $ionicNavBarDelegate.showBackButton(false); 
    // $scope.sessionCheck = sessionService.get('uid');
     $scope.data = {};
     $scope.login = function() {
       console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+      $ionicLoading.show({
+        template: '<ion-spinner icon="ripple"></ion-spinner>'+
+                   '<p>Please wait</p>'
+      });
       loginService.login($scope.data.username, $scope.data.password)
         .success(function(data) {
             //$state.go('tab.dash');
+            $ionicLoading.hide();
         }).error(function(data) {
+          $ionicLoading.hide();
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
                 template: 'Please check your credentials!'
@@ -19,9 +25,9 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('googleMapCtrl',function($location){
-  $location.path("comgooglemaps://");
-})
+// .controller('googleMapCtrl',function($location){
+//   $location.path("comgooglemaps://");
+// })
 
 .controller('LogoutCtrl',function($scope,$location,$state,loginService,$ionicPopup,$ionicNavBarDelegate,sessionService){
   loginService.loginCheck();
