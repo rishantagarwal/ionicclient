@@ -12,7 +12,7 @@ angular.module('starter.services', [])
 		},
 		destroy:function(key){
 		  console.log("Session Service - destroy" + key);
-			//$http.get('http://ta-tm-119.hikari.co.jp/logout/');
+			//$http.get('https://apiserver-rishant.c9users.io/logout/');
 			var tmp = sessionStorage.clear();
 			return tmp;
 			//return sessionStorage.removeItem(key);
@@ -70,7 +70,7 @@ angular.module('starter.services', [])
         startOnBoot: true,                   // <-- [Android] Auto start background-service in headless mode when device is powered-up.
 
         // HTTP / SQLite config
-        url: 'http://ta-tm-119.hikari.co.jp/api/setLocation',
+        url: 'https://apiserver-rishant.c9users.io/api/setLocation',
         method: 'POST',
         batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
         autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
@@ -122,7 +122,7 @@ angular.module('starter.services', [])
 				var promise = deferred.promise;
 				promise = $http({
 					method : 'POST',
-					url　　:   'http://ta-tm-119.hikari.co.jp/api/updateStatus',
+					url　　:   'https://apiserver-rishant.c9users.io/api/updateStatus',
 					transformRequest: function(obj) {
             			var str = [];
             			for(var p in obj)
@@ -177,7 +177,7 @@ angular.module('starter.services', [])
 				var promise = deferred.promise();
 				promise = $http({
 					method : 'GET',
-					url:     'http://ta-tm-119.hikari.co.jp/api/getStatus'
+					url:     'https://apiserver-rishant.c9users.io/api/getStatus'
 				});
 				promise.then(function(response){
 					if(response.data.success){
@@ -224,7 +224,7 @@ angular.module('starter.services', [])
 		  
 		  promise = $http({
 		    method:'POST',
-		    url:'http://ta-tm-119.hikari.co.jp/login',
+		    url:'https://apiserver-rishant.c9users.io/login',
 		    transformRequest: function(obj) {
             var str = [];
             for(var p in obj)
@@ -293,9 +293,9 @@ angular.module('starter.services', [])
 		  var promise = deferred.promise;
 		  promise = $http({
 		    method:'GET',
-		    url:'http://ta-tm-119.hikari.co.jp/logout'
+		    url:'https://apiserver-rishant.c9users.io/logout'
 		  });
-			//promise=$http.post('http://ta-tm-119.hikari.co.jp/login',data); //send data to user.php
+			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 	  	//	console.log(promise);
 			promise.then(function(msg){
 			  console.log("Check Api msg"+msg.data);
@@ -328,7 +328,7 @@ angular.module('starter.services', [])
 			$location.path('/login');
 		},
 		islogged:function(){
-		/*	var $checkSessionServer=$http.get('http://ta-tm-119.hikari.co.jp/check');
+		/*	var $checkSessionServer=$http.get('https://apiserver-rishant.c9users.io/check');
 			return $checkSessionServer;*/
 			/*
 			if(sessionService.get('user')) return true;
@@ -339,9 +339,9 @@ angular.module('starter.services', [])
 		  var promise = deferred.promise;
 		  promise = $http({
 		    method:'GET',
-		    url:'http://ta-tm-119.hikari.co.jp/check'
+		    url:'https://apiserver-rishant.c9users.io/check'
 		  });
-			//promise=$http.post('http://ta-tm-119.hikari.co.jp/login',data); //send data to user.php
+			//promise=$http.post('https://apiserver-rishant.c9users.io/login',data); //send data to user.php
 		//	console.log(promise);
 	  promise.then(function(msg){
 			  console.log("Check Api msg"+msg);

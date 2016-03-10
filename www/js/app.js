@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic.service.core', 'ionic.service.analytics','starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$ionicAnalytics) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -17,12 +17,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
        // BackgroundGeolocationService.configurePlugin(window.BackgroundGeolocation);
       }
     }
-    
-    // var x = window.cordova;
-    // alert(x);
-    // console.app(x);
-
-
 
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -33,12 +27,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    $ionicAnalytics.register();
  
   });
 })
 
 
-
+// .run( function($ionicPlatform, $ionicAnalytics) {
+//   $ionicPlatform.ready(function() {
+//     $ionicAnalytics.register();
+//   });
+// })
 
 
 

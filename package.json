@@ -1,7 +1,7 @@
 {
-  "name": "auth",
+  "name": "GPS Tracker",
   "version": "1.1.1",
-  "description": "auth: An Ionic project",
+  "description": "GPS Track: An app to track user movement",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
